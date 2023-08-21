@@ -22,7 +22,8 @@ class BasePackServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-            __DIR__.'/../config/adminlte.php' => config_path('basepackAdminLte.php'),
+            __DIR__.'/../config/adminlte.php' => config_path('adminlte.php'),
+
                 ], 'config');
             
             $this->publishes([
@@ -31,6 +32,8 @@ class BasePackServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../resources/js' => resource_path('js'),
+                __DIR__.'/../resources/public/themes' => public_path('themes'),
+                __DIR__.'/../resources/public/vendor' => public_path('vendor'),
                 ], 'assets');
         }
         // // $kernel->pushMiddleware(CapitalizeTitle::class);
