@@ -76,6 +76,10 @@ Publish Assets
 ```shell
 $ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="assets"
 ``` 
+Add the following line in the ***webpack.mix.js*** file
+```js
+mix.js('resources/js/auth.js', 'public/js')
+```
 Publish Config Files
 ```shell
 $ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="config"

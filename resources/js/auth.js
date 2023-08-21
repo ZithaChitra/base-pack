@@ -10,7 +10,6 @@ const id            = process.env.MIX_PKCE_CLIENT_ID
         redirect to auth-server and get authenticated.
 */
 
-console.log('authenticating...')
 document.addEventListener('sessionCreated', function(){
     console.log('session created')
     window.location = '/dashboard'
