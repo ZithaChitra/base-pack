@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace BasePack\Http\Livewire\Auth;
 
 use Livewire\Component;
 
@@ -28,6 +28,6 @@ class Authenticate extends Component
 
     public function render()
     {
-        return view('livewire.auth.authenticate');
+        return view('auth.authenticate');
     }
 }
