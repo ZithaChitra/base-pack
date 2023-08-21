@@ -71,6 +71,18 @@ $ npm run dev
     ```shell
     php artisan contexts:update
     ```
+### Customizations
+Publish Assets
+```shell
+$ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="assets"
+``` 
+Publish Config Files
+```shell
+$ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="config"
+``` 
+
+
+
 
 ### Update Livewire Assets URL
 - If your app is not deployed on a root url e.g ***https:example.com/your_app***, then you should update the 

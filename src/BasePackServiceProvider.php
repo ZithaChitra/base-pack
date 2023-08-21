@@ -20,17 +20,23 @@ class BasePackServiceProvider extends ServiceProvider
 
     public function boot(Kernel $kernel)
     {
-        // if ($this->app->runningInConsole()) {
-        //     $this->publishes([
-        //     __DIR__.'/../config/config.php' => config_path('blogpackage.php'),
-        //         ], 'config');
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+            __DIR__.'/../config/adminlte.php' => config_path('basepackAdminLte.php'),
+                ], 'config');
             
-        //     $this->publishes([
-        //         __DIR__.'/../resources/views' => resource_path('views/vendor/blogpackage'),
-        //         ], 'views');
-        // }
+            $this->publishes([
+                __DIR__.'/../resources/views' => resource_path('views/vendor/basepack'),
+                ], 'views');
+
+            $this->publishes([
+                __DIR__.'/../resources/js' => resource_path('js'),
+                ], 'assets');
+        }
         // // $kernel->pushMiddleware(CapitalizeTitle::class);
         // $this->loadMigrationsFrom(__DIR__. '/../database/migrations');
+        // $this->force
+        
         $this->loadRoutesFrom(__DIR__. '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'basepack');
         // Artisan::call('adminlte:install');
