@@ -8,7 +8,7 @@
     @livewireStyles
 </head>
 <body>
-    @livewire('auth.authenticate')
+    @livewire('basepack::auth.authenticate')
     @livewireScripts 
     <script>
         console.log('got here')
