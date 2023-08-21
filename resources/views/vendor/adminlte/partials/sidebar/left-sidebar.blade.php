@@ -12,7 +12,8 @@
         <nav class="pt-2">
             <div class="user-panel mt-3 mb-3 d-flex">
                 <div class="info">
-                    <p class="d-block text-white">{{ session('user')->userName}} </p>
+                    {{-- <p class="d-block text-white">{{ session('user')->userName}} </p> --}}
+                    <p class="d-block text-white"> username </p>
                 </div>
             </div>
             <ul class="nav nav-pills nav-sidebar flex-column {{ config('adminlte.classes_sidebar_nav', '') }}"
