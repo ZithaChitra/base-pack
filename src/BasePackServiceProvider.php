@@ -19,9 +19,9 @@ class BasePackServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function(){
             if(class_exists(Livewire::class)){
-                Livewire::component('basepack::auth.authenticate', Authenticate::class);
-                Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
-                Livewire::component('basepack::custom-footer', CustomFooter::class);
+                Livewire::component('bauth.authenticate', Authenticate::class);
+                Livewire::component('admin-dashboard', AdminDashboard::class);
+                Livewire::component('custom-footer', CustomFooter::class);
             }
         });
         // $this->app->bind('calculator', function($app){
