@@ -19,9 +19,9 @@ class BasePackServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function(){
             if(class_exists(Livewire::class)){
-                Livewire::component('bauth.authenticate', Authenticate::class);
-                Livewire::component('admin-dashboard', AdminDashboard::class);
-                Livewire::component('custom-footer', CustomFooter::class);
+                // Livewire::component('bauth.authenticate', Authenticate::class);
+                // Livewire::component('admin-dashboard', AdminDashboard::class);
+                // Livewire::component('custom-footer', CustomFooter::class);
             }
         });
         // $this->app->bind('calculator', function($app){
@@ -32,6 +32,10 @@ class BasePackServiceProvider extends ServiceProvider
 
     public function boot(Kernel $kernel)
     {
+
+        Livewire::component('auth.authenticate', Authenticate::class);
+        Livewire::component('admin-dashboard', AdminDashboard::class);
+        Livewire::component('custom-footer', CustomFooter::class);
         if ($this->app->runningInConsole()) {
             $this->publishes([
             __DIR__.'/../config/adminlte.php' => config_path('adminlte.php'),
