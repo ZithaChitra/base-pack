@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    @livewire('admin-dashboard')
+    @livewire('basepack::admin-dashboard')
 @stop
 
 @section('footer')

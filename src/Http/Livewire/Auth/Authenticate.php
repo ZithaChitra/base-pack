@@ -28,6 +28,6 @@ class Authenticate extends Component
 
     public function render()
     {
-        return view('auth.authenticate');
+        return view('basepack::livewire.auth.authenticate');
     }
 }

@@ -8,6 +8,6 @@ class AdminDashboard extends Component
 {
     public function render()
     {
-        return view('admin-dashboard');
+        return view('basepack::livewire.admin-dashboard');
     }
 }
