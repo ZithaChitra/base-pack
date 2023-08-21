@@ -18,12 +18,11 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function(){
-    return view('auth');
+    return view('basepack::auth');
 })->name( 'login' );
 
 Route::get('/logout', [IdservLoginController::class, 'logout'] )
-    ->name( 'logout' )
-    ->middleware('idservAuth');
+    ->name( 'logout' );
 
 Route::get('/callback', function(){
     $input = request()->all();
@@ -33,8 +32,12 @@ Route::get('/callback', function(){
 })->name('idservcallback');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard')->middleware('idservAuth');
+    return view('basepack::dashboard');
+})->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->name('dashboard')->middleware('idservAuth');
 
 
 
