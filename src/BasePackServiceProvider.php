@@ -11,16 +11,19 @@ use Livewire\Livewire;
 use BasePack\Http\Livewire\Auth\Authenticate;
 use BasePack\Http\Livewire\AdminDashboard;
 use BasePack\Http\Livewire\CustomFooter;
+use Illuminate\View\Compilers\BladeCompiler;
 
 class BasePackServiceProvider extends ServiceProvider 
 {
     public function register()
     {
-        if(class_exists(Livewire::class)){
-            Livewire::component('basepack::auth.authenticate', Authenticate::class);
-            Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
-            Livewire::component('basepack::custom-footer', CustomFooter::class);
-        }
+        $this->callAfterResolving(BladeCompiler::class, function(){
+            if(class_exists(Livewire::class)){
+                Livewire::component('basepack::auth.authenticate', Authenticate::class);
+                Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
+                Livewire::component('basepack::custom-footer', CustomFooter::class);
+            }
+        });
         // $this->app->bind('calculator', function($app){
         //     return new Calculator();
         // });
