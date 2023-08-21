@@ -8,7 +8,7 @@ use Blessing\BrandsplashPackage\Http\Middleware\CapitalizeTitle;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Artisan;
 
-class BlogPackageServiceProvider extends ServiceProvider 
+class BasePackServiceProvider extends ServiceProvider 
 {
     public function register()
     {
