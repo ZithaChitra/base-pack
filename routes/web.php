@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\IdservLoginController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+Route::get('/', function () {
+    return redirect('login');
+});
+
+Route::get('/login', function(){
+    return view('auth');
+})->name( 'login' );
+
+Route::get('/logout', [IdservLoginController::class, 'logout'] )
+    ->name( 'logout' )
+    ->middleware('idservAuth');
+
+Route::get('/callback', function(){
+    $input = request()->all();
+    if(isset($input['tkn'])){
+        return redirect("/login?tkn=".$input['tkn']);
+    }
+})->name('idservcallback');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard')->middleware('idservAuth');
+
+
+
