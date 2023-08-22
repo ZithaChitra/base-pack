@@ -12,6 +12,7 @@ use BasePack\Http\Livewire\AdminDashboard;
 use BasePack\Http\Livewire\CustomFooter;
 use Illuminate\View\Compilers\BladeCompiler;
 use BasePack\Http\Middleware\IdservAuth;
+use Illuminate\Routing\Router;
 
 class BasePackServiceProvider extends ServiceProvider 
 {
@@ -43,9 +44,10 @@ class BasePackServiceProvider extends ServiceProvider
                 __DIR__.'/../resources/public/vendor' => public_path('vendor'),
                 ], 'assets');
         }
-        $kernel->pushMiddleware(IdservAuth::class);
+        $router = $this->app->make(Router::class);
+        $router->aliasMiddleware('idservAuth', IdservAuth::class);
         $this->loadMigrationsFrom(__DIR__. '/../database/migrations');
-        // $this->force
+        
         
         $this->loadRoutesFrom(__DIR__. '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'basepack');

@@ -33,7 +33,7 @@ Route::get('/callback', function(){
 
 Route::get('/dashboard', function () {
     return view('basepack::dashboard');
-})->name('dashboard')->middleware('web');
+})->name('dashboard')->middleware(['web', 'idservAuth']);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
