@@ -32,10 +32,11 @@ class BasePackServiceProvider extends ServiceProvider
 
     public function boot(Kernel $kernel)
     {
-
-        Livewire::component('basepack::auth.authenticate', Authenticate::class);
-        Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
-        Livewire::component('basepack::custom-footer', CustomFooter::class);
+        if(class_exists(Livewire::class)){
+            Livewire::component('basepack::auth.authenticate', Authenticate::class);
+            Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
+            Livewire::component('basepack::custom-footer', CustomFooter::class);
+        }
         if ($this->app->runningInConsole()) {
             $this->publishes([
             __DIR__.'/../config/adminlte.php' => config_path('adminlte.php'),

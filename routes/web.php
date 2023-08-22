@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/login', function(){
     return view('basepack::auth');
-})->name( 'login' );
+})->name( 'login' )->middleware('web');
 
 Route::get('/logout', [IdservLoginController::class, 'logout'] )
     ->name( 'logout' );
@@ -33,7 +33,7 @@ Route::get('/callback', function(){
 
 Route::get('/dashboard', function () {
     return view('basepack::dashboard');
-})->name('dashboard');
+})->name('dashboard')->middleware('web');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
