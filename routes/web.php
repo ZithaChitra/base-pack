@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
-// })->name('dashboard')->middleware('idservAuth');
+// })->name('dashboard')->middleware('idservAuth'); 
 
 
 
