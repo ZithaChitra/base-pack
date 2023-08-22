@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace BasePack\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;

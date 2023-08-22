@@ -1,3 +1,19 @@
+# Installing Package
+
+**IMPORTANT: Make sure to set the correct .env vars**
+```shell
+$ composer create-project laravel/laravel project-name
+$ composer require blessingchitra/basepack
+$ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="assets"
+$ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="config"
+$ php artisan migrate
+$ php artisan contexts:update
+```
+
+
+
+
+
 ## App Setup
 
 ### Register App with IDSERV (auth server) 

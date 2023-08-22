@@ -12,6 +12,7 @@ use BasePack\Http\Livewire\AdminDashboard;
 use BasePack\Http\Livewire\CustomFooter;
 use Illuminate\View\Compilers\BladeCompiler;
 use BasePack\Http\Middleware\IdservAuth;
+use BasePack\Console\Commands\UpdateAppContexts;
 use Illuminate\Routing\Router;
 
 class BasePackServiceProvider extends ServiceProvider 
@@ -27,6 +28,7 @@ class BasePackServiceProvider extends ServiceProvider
             Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
             Livewire::component('basepack::custom-footer', CustomFooter::class);
         }
+        $this->commands([UpdateAppContexts::class]);
         if ($this->app->runningInConsole()) {
             $this->publishes([
             __DIR__.'/../config/adminlte.php' => config_path('adminlte.php'),
