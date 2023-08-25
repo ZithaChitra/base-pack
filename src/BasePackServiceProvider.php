@@ -5,12 +5,10 @@ namespace BasePack;
 // require_once __DIR__.'/../vendor/autoload.php';
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Livewire;
 use BasePack\Http\Livewire\Auth\Authenticate;
 use BasePack\Http\Livewire\AdminDashboard;
 use BasePack\Http\Livewire\CustomFooter;
-use Illuminate\View\Compilers\BladeCompiler;
 use BasePack\Http\Middleware\IdservAuth;
 use BasePack\Console\Commands\UpdateAppContexts;
 use Illuminate\Routing\Router;
@@ -54,8 +52,7 @@ class BasePackServiceProvider extends ServiceProvider
         
         $this->loadRoutesFrom(__DIR__. '/../routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'basepack');
-        // Artisan::call('adminlte:install');
-        
+        // Artisan::call('adminlte:install');  
     }
 }
 

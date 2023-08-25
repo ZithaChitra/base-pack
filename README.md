@@ -11,9 +11,6 @@ $ php artisan contexts:update
 ```
 
 
-
-
-
 ## App Setup
 
 ### Register App with IDSERV (auth server) 
