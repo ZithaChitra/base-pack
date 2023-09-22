@@ -58,15 +58,15 @@ DB_CONNECTION=sqlite
 
 DEFAULT_THEME=default
 
-AUTH_SERVER=https://iddev.msbmicro.com/
+AUTH_SERVER=https://authserver.com/
 LIVEWIRE_ASSET_URL=
 
-CONTEXT_FILE_ENDPOINT=https://simapidev.msbmicro.com/.well-known/context.json
+CONTEXT_FILE_ENDPOINT=https://api/.well-known/context.json
 MIX_PKCE_CLIENT_ID=client_id
 MIX_APP_URL=app_url
-MIX_AUTH_SERVER=https://iddev.msbmicro.com/
-MIX_GRAPHQL_ENDPOINT=https://simapidev.msbmicro.co/graphql
-CONTEXT_FILE_ENDPOINT=https://simapidev.msbmicro.com/.well-known/context.json
+MIX_AUTH_SERVER=https://authserver.com/
+MIX_GRAPHQL_ENDPOINT=https://api.com/graphql
+CONTEXT_FILE_ENDPOINT=https://api.com/.well-known/context.json
 ```
 
 ### Build Assets
