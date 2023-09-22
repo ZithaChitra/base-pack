@@ -331,6 +331,19 @@ return [
             'icon' => 'fas fa-tachometer-alt',
         ],
         [
+            'text'        => 'Access Admin',
+            'url'         => '/xaccess',
+            'icon'        => 'fas fa-user-lock',
+            'active'      => ['xaccess']
+        ],
+        [
+            'text'        => 'App Admin',
+            'url'         => '/xadmin',
+            'icon'        => 'fas fa-sliders-h',
+            'active'      => ['xadmin'],
+            'topnav_right' => true,
+        ],
+        [
             'text' => 'Page 1',
             'url'  => '/dashboard#',
             // 'icon' => 'fas fa-fw fa-lock',

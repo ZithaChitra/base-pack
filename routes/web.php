@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use BasePack\Http\Controllers\Auth\IdservLoginController;
 
+use BasePack\Http\Livewire\AppconfDashboard;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +32,18 @@ Route::get('/callback', function(){
         return redirect("/login?tkn=".$input['tkn']);
     }
 })->name('idservcallback');
+
+Route::get('/xadmin', function(){
+    return view('basepack::appconfDashboard');
+})->name('xadmin')->middleware(['web', 'idservAuth']);
+
+Route::get('/xaccess', function(){
+    return view('basepack::accessconfDashboard');
+})->name('xadmin')->middleware(['web', 'idservAuth']);
+
+Route::get('/xmenu', function(){
+    return view('basepack::menuconfDashboard');
+})->name('xmenu')->middleware(['web', 'idservAuth']);
 
 Route::get('/dashboard', function () {
     return view('basepack::dashboard');

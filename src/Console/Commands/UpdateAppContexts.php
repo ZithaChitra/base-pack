@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Context;
+use BasePack\Models\Context;
 
 class UpdateAppContexts extends Command
 {
@@ -54,38 +54,38 @@ class UpdateAppContexts extends Command
                 $contexts = $body->contexts;
             }
 
-            echo("Contexts count: " . count($contexts) . PHP_EOL);
+            $this->info("Contexts count: " . count($contexts));
 
 
 
             // updates the context.json file
             // TODO: import context.json file from SIM-API 
-            if(Storage::disk('public_uploads')->exists('/.well-known/context.json')){ // file does not exist
-                echo("File exists" . PHP_EOL . "reading and updating file" . PHP_EOL);
+            if(Storage::disk('public_uploads')->exists('/.well-known/context.json')){ // file does exists
+                $this->info("Contexts.json file exists. Reading and updating file");
                 $prev = Storage::disk('public_uploads')->get('/.well-known/context.json');
                 $prev = json_decode($prev);
                 if(property_exists($prev, 'roles')){
                     $roles = $prev->roles;
                 }else{
-                    echo("Roles not defined in existing context.json file" . PHP_EOL);
+                    $this->info("Roles not defined in existing context.json file");
                 }
 
                 $fileData = json_encode(['roles' => $roles, 'contexts' => $contexts,]);
                 $saved = Storage::disk('public_uploads')->put('/.well-known/context.json', $fileData);
                 if($saved){
-                    echo("File saved" . PHP_EOL);
+                    $this->info("File saved");
                 }else{
-                    echo("FIle could not be saved" . PHP_EOL);
+                    $this->info("FIle could not be saved");
                 }
 
             }else{
-                echo("File 'context.json' does not exist. Attempting to create file." . PHP_EOL);
+                $this->info("File 'context.json' does not exist. Attempting to create file.");
                 $fileData = json_encode(['roles' => [], 'contexts' => $contexts,]);
                 $saved = Storage::disk('public_uploads')->put('/.well-known/context.json', $fileData);
                 if($saved){
-                    echo("File saved" . PHP_EOL);
+                    $this->info("File saved");
                 }else{
-                    echo("FIle could not be saved" . PHP_EOL);
+                    $this->info("FIle could not be saved" );
                 }
 
             }
@@ -101,7 +101,7 @@ class UpdateAppContexts extends Command
                 $oldContext->save();
             }
 
-            echo('updating contexts...' . PHP_EOL);
+            $this->info('updating contexts...');
             foreach ($contexts as $context) {
                 try{
                     $oldContext = Context::where('name', $context)->first();
@@ -117,22 +117,24 @@ class UpdateAppContexts extends Command
                         ]);
                     }
                 }catch(\Exception $e){
-                    echo("Could not save or update contexts in database." . PHP_EOL);
-                    echo($e);
+                    $this->info("Could not save or update contexts in database.");
+                    $this->info($e);
+                    return 1;
                 }
             }
 
 
             
         }catch(ClientException $e){
-            echo("An error occurred while making a request to the API" . PHP_EOL);
+            $this->info("An error occurred while making a request to the API");
+            return 1;
         }
 
         
 
 
-        echo(PHP_EOL);
-        echo('Cron job completed' . PHP_EOL);
+        // echo(PHP_EOL);
+        $this->info('Cron job completed from package');
         
         return 0;
     }

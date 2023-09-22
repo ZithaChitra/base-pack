@@ -5,19 +5,19 @@ namespace BasePack\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Context extends Model
+class RoleHasPermission extends Model
 {
     use HasFactory;
 
-    protected $table = 'contexts';
+    protected $table = 'role_has_permissions';
 
     protected $fillable = [
-        'name',
-        'active',
+        'role_id',
+        'permission_id',
         'created_by',
         'modified_by',
     ];
-
+    
     const UPDATED_AT = 'modified';
     const CREATED_AT = 'created';
 }

@@ -6,7 +6,8 @@ $ composer create-project laravel/laravel project-name
 $ composer require blessingchitra/basepack
 $ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="assets"
 $ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="config"
-$ php artisan migrate
+$ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="seeders"
+$ php artisan migrate --seed --seeder=Database\\Seeders\\BasePackTableSeeders
 $ php artisan contexts:update
 ```
 
@@ -119,6 +120,38 @@ $ php artisan serve
 * You can make changes to the sidebar nav menu by updating the  **adminlte.php** config file.
     * nav links
     * logo, e.t.c...
+
+### Database
+**Register and Run All database seeders on global app** \
+1. Publish all database seeders
+    ```shell
+    $ php artisan vendor:publish --provider="BasePack\BasePackServiceProvider" --tag="seeders"
+    ```
+2. Import seeder classes (database/seeders/DatabaseSeeder.php) and register to laravel app's default database seeder. e.g
+    ```php
+    use Database\Seeders\SettingThemesTableSeeder;
+
+    class DatabaseSeeder extends Seeder
+    {
+        public function run()
+        {
+            $this->call(
+                [
+                    SettingThemesTableSeeder::class
+                ]
+            );
+        }
+    }
+    ```
+3. Then run all database seeders
+    ```shell
+    $ php artisan db:seed
+    ```
+
+
+
+
+
 
  
 
