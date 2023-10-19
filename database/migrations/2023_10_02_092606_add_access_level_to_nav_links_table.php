@@ -14,7 +14,7 @@ class AddAccessLevelToNavLinksTable extends Migration
     public function up()
     {
         Schema::table('nav_links', function (Blueprint $table) {
-            $table->integer('access_level')->default(3);
+            $table->integer('access_level')->default(3)->nullable();
         });
     }
 

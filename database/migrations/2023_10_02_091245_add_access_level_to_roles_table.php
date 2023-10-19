@@ -14,7 +14,7 @@ class AddAccessLevelToRolesTable extends Migration
     public function up()
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->integer('access_level')->default(3); // user default - 3
+            $table->integer('access_level')->default(3)->nullable(); // user default - 3
         });
     }
 
