@@ -14,7 +14,7 @@ class AddLevelAndOrderIndexToNavLinks extends Migration
     public function up()
     {
         Schema::table('nav_links', function (Blueprint $table) {
-            $table->integer('level')->default(1)->nullable();
+            $table->integer('level')->nullable();
             $table->integer('order_index');
         });
     }
