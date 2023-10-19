@@ -6,6 +6,21 @@ use BasePack\Models\Role;
 use BasePack\Models\RoleHasPermission;
 use BasePack\Models\Permission;
 
+
+class AccessRoles{
+
+    public static function roleHasAccess($role, $minAccess){
+        $role = Role::where('rolename', $role)->first();   
+        if($role){
+            $roleAcess  = $role->access_level;
+            if($roleAcess >= $minAccess){
+                return true;
+            }
+        } 
+        return false;
+    }
+}
+
 trait UserActionGuardTrait{
     public $userPerms = [];
 
@@ -32,5 +47,9 @@ trait UserActionGuardTrait{
             }
         }
         return false;
+    }
+
+    public function roleHasAccess($role, $maxAccess){
+        return AccessRoles::roleHasAccess($role, $maxAccess);
     }
 }

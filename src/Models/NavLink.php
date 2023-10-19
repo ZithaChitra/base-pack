@@ -20,6 +20,8 @@ class NavLink extends Model
         'classes',
         'active',
         'enabled',
+        'level',
+        'order_index',
         'parent_id',
         'created_by',
         'modified_by',

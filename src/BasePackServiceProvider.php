@@ -15,8 +15,11 @@ use BasePack\Http\Livewire\AdminDashboard;
 use BasePack\Http\Livewire\AppconfDashboard;
 use BasePack\Http\Livewire\Auth\Authenticate;
 use BasePack\Http\Livewire\MenuconfDashboard;
+use BasePack\Http\Livewire\Components\NavList;
 use BasePack\Http\Livewire\AccessconfDashboard;
 use BasePack\Console\Commands\UpdateAppContexts;
+use BasePack\Console\InstallMsbBaseApp;
+use BasePack\Console\UpdateAssetsMsbBaseApp;
 
 class BasePackServiceProvider extends ServiceProvider 
 {
@@ -29,6 +32,7 @@ class BasePackServiceProvider extends ServiceProvider
 
         if(class_exists(Livewire::class)){
             Livewire::component('basepack::custom-footer', CustomFooter::class);
+            Livewire::component('basepack::components.nav-list', NavList::class);
             Livewire::component('basepack::admin-dashboard', AdminDashboard::class);
             Livewire::component('basepack::auth.authenticate', Authenticate::class);
             Livewire::component('basepack::appconf-dashboard', AppconfDashboard::class);
@@ -37,7 +41,11 @@ class BasePackServiceProvider extends ServiceProvider
 
         }
         if ($this->app->runningInConsole()) {
-            $this->commands([UpdateAppContexts::class]);
+            $this->commands([
+                UpdateAppContexts::class,
+                InstallMsbBaseApp::class,
+                UpdateAssetsMsbBaseApp::class,
+            ]);
             $this->publishes([
             __DIR__.'/../config/adminlte.php' => config_path('adminlte.php'),
 

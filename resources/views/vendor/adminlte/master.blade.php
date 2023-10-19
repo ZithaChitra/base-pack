@@ -49,7 +49,7 @@
 
     {{-- Custom Stylesheets (post AdminLTE) --}}
     {{-- @yield('adminlte_css') --}}
-    <link rel="stylesheet" href="{{ asset('themes/'.env('DEFAULT_THEME').'/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/'.config('app.theme').'/css/style.css') }}">
 
 
     {{-- Favicon --}}
@@ -104,6 +104,7 @@
             <livewire:scripts />
         @endif
     @endif
+    <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.2.0/dist/livewire-sortable.js"></script>
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')

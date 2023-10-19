@@ -9,14 +9,17 @@ class NavLinksTableSeeder extends Seeder
 {
     public $menuDefault = [
         [
-            'text'        => 'Dashboard',
-            'url'         => '/dashboard',
-            'icon'        => 'fas fa-tachometer-alt',
-            'active'      => ['dashboard'],
-            'classes'     => '',
-            'access'      =>  'dashboard.read',
-            'visible'     => true,
-            'enabled'     => true,
+            'text'         => 'Dashboard',
+            'url'          => '/dashboard',
+            'icon'         => 'fas fa-tachometer-alt',
+            'active'       => ['dashboard'],
+            'classes'      => '',
+            'access'       =>  'dashboard.read',
+            'visible'      => true,
+            'enabled'      => true,
+            'level'        => 1,
+            'order_index'  => 0,
+            'access_level' => 4,
         ],
         [
             'text'        => 'APNs',
@@ -27,6 +30,9 @@ class NavLinksTableSeeder extends Seeder
             'access'      => 'apns.read',
             'visible'     => true,
             'enabled'     => true,
+            'level'       => 1,
+            'order_index' => 1,
+            'access_level' => 4,
         ],
         [
             'text'        => 'Subscribers',
@@ -37,6 +43,9 @@ class NavLinksTableSeeder extends Seeder
             'access'      => 'subscribers.read',
             'visible'     => true,
             'enabled'     => true,
+            'level'       => 1,
+            'order_index' => 2,
+            'access_level' => 4,
         ],
         [
             'text'        => 'Sessions',
@@ -47,6 +56,10 @@ class NavLinksTableSeeder extends Seeder
             'access'      => 'sessions.read',
             'visible'     => true,
             'enabled'     => true,
+            'level'       => 1,
+            'order_index' => 3,
+            'access_level' => 4,
+
         ],
         [
             'text'        => 'Archived Data',
@@ -57,6 +70,9 @@ class NavLinksTableSeeder extends Seeder
             'access'      => 'archived-data.read',
             'visible'     => true,
             'enabled'     => true,
+            'level'       => 1,
+            'order_index' => 4,
+            'access_level' => 4,
         ],
 
         [
@@ -71,6 +87,10 @@ class NavLinksTableSeeder extends Seeder
                     'access'      => 'setting-appaccess.read',
                     'visible'     => true,
                     'enabled'     => true,
+                    'level'       => 2,
+                    'order_index' => 0,
+                    'access_level' => 9,
+
                 ],
                 [
                     'text'        => 'Menu Config',
@@ -81,6 +101,9 @@ class NavLinksTableSeeder extends Seeder
                     'access'      => 'setting-appmenu.read',
                     'visible'     => true,
                     'enabled'     => true,
+                    'level'       => 2,
+                    'order_index' => 1,
+                    'access_level' => 9,
                 ],
                 [
                     'text'        => 'App Config',
@@ -91,6 +114,52 @@ class NavLinksTableSeeder extends Seeder
                     'access'      => 'setting-appconf.read',
                     'visible'     => true,
                     'enabled'     => true,
+                    'level'       => 2,
+                    'order_index' => 2,
+                    'access_level' => 9,
+                    
+                ],
+                [
+                    'text'        => 'Third Level Menu',
+                    'url'         => '#',
+                    'submenu'     => [
+                        [
+                            'text'        => 'Example Link 1',
+                            'url'         => '/#',
+                            'icon'        => 'fas fa-sliders-h',
+                            'active'      => [],
+                            'classes'     => '',
+                            'access'      => 'setting-appmenu.read',
+                            'visible'     => true,
+                            'enabled'     => true,
+                            'level'       => 3,
+                            'order_index' => 0,
+                            'access_level' => 9,
+                            
+                        ],
+                        [
+                            'text'        => 'Example Link 2',
+                            'url'         => '/#',
+                            'icon'        => 'fas fa-sliders-h',
+                            'active'      => [],
+                            'classes'     => '',
+                            'access'      => 'setting-appmenu.read',
+                            'visible'     => true,
+                            'enabled'     => true,
+                            'level'       => 3,
+                            'order_index' => 1,
+                            'access_level' => 9,
+                            
+                        ],
+                    ],
+                    'icon'        => 'fas fa-cog fa-fw',
+                    'classes'     => '',
+                    'access'      => '',
+                    'visible'     => true,
+                    'enabled'     => true,
+                    'level'       => 2,
+                    'order_index' => 3,
+                    'access_level' => 9,
                     
                 ],
             ],
@@ -99,6 +168,9 @@ class NavLinksTableSeeder extends Seeder
             'access'      => '',
             'visible'     => true,
             'enabled'     => true,
+            'level'       => 1,
+            'order_index' => 5,
+            'access_level' => 9,
         ],
     ];
 
@@ -119,10 +191,13 @@ class NavLinksTableSeeder extends Seeder
                         'visible'     => $menuItem['visible'],
                         'enabled'     => $menuItem['enabled'],
                         'classes'     => $menuItem['classes'],
+                        'level'       => $menuItem['level'],
+                        'order_index' => $menuItem['order_index'],
                         'active'      => json_encode($menuItem['active'] ?? []),
                         'parent_id'   => $parentId,
                         'created_by'  => 'db_seeder',
                         'modified_by' => 'db_seeder',
+                        'access_level' => $menuItem['access_level'] ?? 4,
                     ],
                 );
 

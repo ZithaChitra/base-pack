@@ -27,17 +27,22 @@ class IdservAuth
     {
         $time = time();
 
-        $userAppRole = session('user')->appRole ?? '';
+        $userAppRole    = session('user')->appRole ?? '';
+        $preferredTheme = session('user')->preferredTheme;
+
         if(!$userAppRole){
-            abort(401, 'User role could not be determined'); // unauthorized access
+            abort(401, 'User role could not be determined'); // unauthorized access - role could not be determined
         }
         
-        $menus = (new NavigationGuard($userAppRole))->filteredMenu();
+        $navGuard = new NavigationGuard($userAppRole);
+        $menus = $navGuard->filteredMenu(); // build nav menu based on role
         config()->set('adminlte.menu', $menus);
+        config()->set('app.theme', $preferredTheme);
         
-        $hasAccessToRoute = NavigationGuard::canGoToRoute($userAppRole, $request->route()->uri);
-        if(!$hasAccessToRoute){
-            abort(401); // unauthorized access
+        
+        $hasAccessToRoute = $navGuard->canGoToRoute($userAppRole, $request->route()->uri);
+        if(!$hasAccessToRoute){ // check if role has access to requested route
+            abort(401); // unauthorized access - role has no access to requested route
         }
         
         // validate the access token jwt issued by laravel passport

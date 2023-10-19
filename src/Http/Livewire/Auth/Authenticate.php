@@ -3,6 +3,7 @@
 namespace BasePack\Http\Livewire\Auth;
 
 use Livewire\Component;
+use BasePack\Http\Controllers\Settings\ThemeManager;
 
 class Authenticate extends Component
 {
@@ -18,7 +19,16 @@ class Authenticate extends Component
             if(count($token_parts) == 3){
                 session()->put('userToken', ['token' => $app_token]);
                 $decoded  = json_decode(base64_decode(str_replace('_', '/', str_replace('-','+',explode('.', $app_token)[1]))));
-                session()->put('user', (object)['userName' => $decoded->userName, 'appRole' => $decoded->appRole ?? '']);
+                $preferredTheme = $decoded->preferredTheme ?? null;
+                $preferredTheme = ThemeManager::isThemeInstalled($preferredTheme) ? $preferredTheme : 'default';
+
+                session()->put('user', (object)[
+                    'userName'       => $decoded->userName, 
+                    'appRole'        => $decoded->appRole ?? '',
+                    'preferredTheme' => $preferredTheme,
+                ]);
+                
+
                 return redirect('/dashboard');
             }else{ // could not authenticate
                 return redirect('/login');

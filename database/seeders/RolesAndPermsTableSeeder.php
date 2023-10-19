@@ -18,6 +18,11 @@ class RolesAndPermsTableSeeder extends Seeder
     {
         try {
             $defaultRoles = ['Super Administrator', 'Administrator', 'User'];
+            $accessMap = [
+                'Super Administrator' => 9,
+                'Administrator'       => 6,
+                'User'                => 4,
+            ];
             $defaultPerms = [
                 'dashboard.read', 
                 'apns.read', 
@@ -51,6 +56,7 @@ class RolesAndPermsTableSeeder extends Seeder
                 ],
             ];
 
+
             foreach ($defaultPerms as $perm) {
                 Permission::firstOrCreate(
                     ['permission_name' => $perm],
@@ -66,9 +72,10 @@ class RolesAndPermsTableSeeder extends Seeder
                 $newRole = Role::firstOrCreate(
                     ['rolename' => $role],
                     [
-                        'rolename'    => $role,
-                        'created_by'  => 'db_seeder',
-                        'modified_by' => 'db_seeder'
+                        'rolename'     => $role,
+                        'access_level' => $accessMap[$role],
+                        'created_by'   => 'db_seeder',
+                        'modified_by'  => 'db_seeder'
                     ]
                 );
                 if(array_key_exists($role, $defaultRolesPermsMap)){

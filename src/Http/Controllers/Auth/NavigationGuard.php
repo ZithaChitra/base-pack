@@ -7,9 +7,11 @@ use BasePack\Models\Role;
 use BasePack\Models\Permission;
 use BasePack\Models\RoleHasPermission;
 use BasePack\Models\NavLink;
+use BasePack\Http\Traits\UserActionGuardTrait;
 
 class NavigationGuard extends Controller
 {
+    use UserActionGuardTrait;
 
     public $menu = [
         [
@@ -18,6 +20,7 @@ class NavigationGuard extends Controller
             'access'       =>  '',
             'visible'      => true,
             'access'       =>  '',
+            'access_level' => 4,
             'visible'      => true,
             'enabled'      => true,
         ],
@@ -27,6 +30,7 @@ class NavigationGuard extends Controller
             'icon'         => 'fas fa-sign-out-alt',
             'topnav_right' => true,
             'access'       =>  '',
+            'access_level' => 4,
             'visible'      => true,
             'enabled'      => true,
         ],
@@ -37,10 +41,11 @@ class NavigationGuard extends Controller
 
     public function __construct($appRoleName)
     {
-        $links = NavLink::where('parent_id', null)->get()->toArray();
+        $links = NavLink::where('parent_id', null)->orderBy('order_index')->get()->toArray();
         foreach ($links as $link) {
             $link = $this->buildLinksGraph($link);
             $link['active'] = json_decode($link['active']);
+            // $link['id'] = str_replace(' ', '', $link['text']); 
             array_push($this->menu, $link);
         }
         $this->appRoleName  = $appRoleName;   
@@ -49,36 +54,63 @@ class NavigationGuard extends Controller
 
     public function buildLinksGraph($linkModel){
         $children_ = NavLink::where('parent_id', $linkModel['id'])->get()->toArray();
-        $children  = [];
+        $children = array_fill(0, count($children_), null);
+    
         if($children_){
             foreach ($children_ as $child) {
                 $child['active'] = json_decode($child['active']);
-                array_push($children, $child);   
+                // $child['id'] = str_replace(' ', '', $child['text']);
+                $child['classes'] = 'panel-heading';
+                $child = $this->buildLinksGraph($child);
+                $children[$child['order_index']] = $child;
             }
             $linkModel['submenu'] = $children;
         }
         return $linkModel;
     }
 
-    public static function canGoToRoute($userRole, $route){
-        $link  = NavLink::where('url', '/' .$route)->first();
-        if($link){
-            $guard = $link->access;
-            if($guard){
-                $role  = Role::where('rolename', $userRole)->first();
-                $perms = RoleHasPermission::where('role_id', $role->id)->pluck('permission_id');
-                $perms = Permission::whereIn('id', $perms)->pluck('permission_name');
-                foreach ($perms as $perm) {
-                    if($perm == $guard){
-                        return true;
-                    }
-                }
-                return false; // user does not have access to this route
-            }else{
-                return true; // no guard on this route
-            }
 
+    public function canGoToRoute($userRole, $route){
+        $link  = $this->urlSelector($route);
+        if($link){
+            $accessLevel = $link->access_level;
+            return $this->roleHasAccess($userRole, $accessLevel);
         }
+
+        return false;
+    }
+
+
+    public function urlSelector(string $route){
+        $urlParts   = explode('/', $route);
+        $link       = null;
+        if(count($urlParts)  == 1){ // single part url .eg /dashboard
+            $link  = NavLink::where('url', '/' .$route)->first();
+            return $link;
+        }
+
+        $urlParsed = $this->urlParser($route);
+
+        foreach ($urlParsed as $url) {
+            $url_ = NavLink::where('url', 'LIKE' ,'/' . $url . '%')->first();
+            if($url_){
+                $link = $url_;
+                return $link;
+            }
+        }
+        
+        return $link;
+    }
+
+    public function urlParser($url){
+        $urlParts = explode('/', $url);
+        $size     = count($urlParts);
+        $urlPartsParsed = [];
+        for ($i = 1; $i < $size + 1; $i++) { 
+            $singlePart =  implode('/', array_slice($urlParts, 0, $i));        
+            $urlPartsParsed[] = $singlePart;
+        }
+        return $urlPartsParsed;
     }
 
     
@@ -105,7 +137,7 @@ class NavigationGuard extends Controller
         $menu = $level === 1 ? $this->menu : $menu;
 
         foreach ($menu as $key =>$menuItem) {
-
+            // dd($menu);
             $isVisible = $menuItem['visible'];
             if(!$isVisible){
                 $menu[$key]['classes'] = ' d-none ';
@@ -113,13 +145,16 @@ class NavigationGuard extends Controller
             }
             
 
-            if($menuItem['access']){
-                $access = $menuItem['access'];
-                $hasAccess = key_exists($access, $this->rolePerms);
+            if($menuItem['access_level']){
+                $access = $menuItem['access_level'];
+                // $hasAccess = key_exists($access, $this->rolePerms);
+                $hasAccess = $this->roleHasAccess($this->appRoleName, (int)$menuItem['access_level']);
                 if(!$hasAccess){
                     $menu[$key]['classes'] = ' d-none ';
                     continue;
                 }
+                
+
             }
 
             // dd($menuItem);
